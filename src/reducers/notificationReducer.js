@@ -11,9 +11,12 @@ const reducer = (state = initialState, action) => {
   //
 };
 
+let timer;
+
 export const setNotification = (msg, seconds) => {
   return async dispatch => {
-    await setTimeout(() => dispatch(resetNotification), seconds * 1000);
+    if (timer) clearTimeout(timer);
+    timer = await setTimeout(() => dispatch(resetNotification), seconds * 1000);
     dispatch(votedOn(msg));
   };
 };

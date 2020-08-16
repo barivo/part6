@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { incrementVote } from "../reducers/anecdoteReducer";
 import { setNotification } from "../reducers/notificationReducer";
+import { incrementVote } from "../reducers/anecdoteReducer";
 
 const style = {
   border: "solid",
@@ -20,6 +20,10 @@ const AnecdoteList = props => {
           ? a.content.toLowerCase().includes(props.filter.data)
           : a
       );
+  const handleUpVote = anecdote => {
+    props.incrementVote(anecdote.id, anecdote.votes);
+    props.setNotification(anecdote.content, 5);
+  };
 
   return (
     <>
@@ -30,7 +34,7 @@ const AnecdoteList = props => {
             has {anecdote.votes}
             <button
               style={{ margin: 5 + "px" }}
-              onClick={() => props.incrementVote(anecdote.id, anecdote.votes)}
+              onClick={() => handleUpVote(anecdote)}
             >
               vote
             </button>
